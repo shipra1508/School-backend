@@ -5,9 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 //@Entity tells Spring that this class maps to a table in the database
 @Entity
+@Table(name = "Student")
 public class Student {
 	//@Id tells primary key of the table
 	@Id

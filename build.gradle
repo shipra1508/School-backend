@@ -28,6 +28,9 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+    //security
+    implementation 'org.springframework.security:spring-security-core:6.1.5'
+    
 }
 
 tasks.withType(JavaCompile).configureEach {
