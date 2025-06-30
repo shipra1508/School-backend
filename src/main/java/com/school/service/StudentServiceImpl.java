@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.school.StudentRepository.StudentRepository;
 import com.school.bo.StudentBO;
 import com.school.dto.StudentDTO;
 import com.school.entity.Student;
 import com.school.exception.StudentNotFoundException;
 import com.school.mapper.StudentMapper;
+import com.school.repository.StudentRepository;
 
 
 @Service

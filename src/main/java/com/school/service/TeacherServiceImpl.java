@@ -4,12 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.school.StudentRepository.TeacherRepository;
+
 import com.school.bo.TeacherBO;
 import com.school.dto.TeacherDTO;
 import com.school.entity.Teacher;
 import com.school.exception.TeacherNotFoundException;
 import com.school.mapper.TeacherMapper;
+import com.school.repository.TeacherRepository;
 
 @Service
 public class TeacherServiceImpl implements TeacherService {
