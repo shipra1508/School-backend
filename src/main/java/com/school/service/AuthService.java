@@ -1,10 +1,9 @@
 package com.school.service;
 
-import com.school.bo.UserBO;
-import com.school.entity.User;
+import com.school.dto.RegisterDTO;
 
 public interface AuthService {
 
-	User register(UserBO userBO);
+	RegisterDTO register(RegisterDTO dto);
 
 }

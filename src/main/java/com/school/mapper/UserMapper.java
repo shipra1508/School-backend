@@ -3,6 +3,7 @@ package com.school.mapper;
 import org.mapstruct.Mapper;
 
 import com.school.bo.UserBO;
+import com.school.dto.LoginDTO;
 import com.school.dto.RegisterDTO;
 import com.school.entity.User;
 
@@ -20,4 +21,7 @@ public interface UserMapper {
 
 	// Entity → DTO 
 	RegisterDTO toDTO(User entity);
+	
+    // LoginDTO → UserBO (login)
+    UserBO toBO(LoginDTO dto);
 }
