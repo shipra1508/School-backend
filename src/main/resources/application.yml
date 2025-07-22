@@ -1,0 +1,49 @@
+# Spring Boot Application Name
+spring:
+  application:
+    name: School-backend-1
+
+# Default Profile to 'dev'
+
+  profiles:
+    active: dev 
+
+
+# PostgreSQL DB Driver (shared)
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+# Hibernate/JPA (shared)
+  jpa:
+    hibernate:
+      ddl-auto: update   # update the database schema to match JPA entities
+    show-sql: true       # Show SQL queries in the console/log for debugging purposes
+    database-platform: org.hibernate.dialect.PostgreSQLDialect  # Helps Hibernate generate compatible queries
+
+#-- is a document separator 
+---
+# DEV Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/School_db
+    username: postgres
+    password: root
+server:
+  port: 8081
+
+---
+
+# TEST Profile
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:postgresql://localhost:5432/School_db
+    username: postgres
+    password: root
+server:
+  port: 8082
