@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -8,16 +9,19 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.school.config.SecurityConfig; // ✅ Import your config
 import com.school.dto.LoginDTO;
 import com.school.dto.RegisterDTO;
 import com.school.role.Role;
 import com.school.service.AuthService;
 
+@Import(SecurityConfig.class) 
 @WebMvcTest(AuthController.class)
 class AuthControllerTest {
 
@@ -37,6 +41,7 @@ class AuthControllerTest {
                .thenReturn(request);
 
         mockMvc.perform(post("/auth/register")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isCreated())
@@ -45,15 +50,15 @@ class AuthControllerTest {
 
     @Test
     void loginUserSuccessfully() throws Exception {
-        LoginDTO request = new LoginDTO("teacher1", "pass123",Role.TEACHER);
+        LoginDTO request = new LoginDTO("teacher1", "pass123", Role.TEACHER);
         Mockito.when(authService.login(Mockito.any(LoginDTO.class)))
                .thenReturn(request);
 
         mockMvc.perform(post("/auth/login")
+                .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(request)))
             .andExpect(status().isAccepted())
             .andExpect(content().string("teacher1 logged in successfully as TEACHER"));
-
     }
 }

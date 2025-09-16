@@ -36,6 +36,8 @@ server:
 
 ---
 
+---
+
 # TEST Profile
 spring:
   config:
@@ -45,5 +47,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/School_db
     username: postgres
     password: root
+  security:
+    enabled: false
+
 server:
   port: 8082
+
+

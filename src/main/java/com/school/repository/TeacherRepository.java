@@ -1,7 +1,8 @@
 package com.school.repository;
 
-import com.school.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.school.entity.Teacher;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Integer> {
 	

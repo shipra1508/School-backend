@@ -1,8 +1,9 @@
 package com.school.mapper;
 
 import org.mapstruct.Mapper;
-import com.school.dto.StudentDTO;
+
 import com.school.bo.StudentBO;
+import com.school.dto.StudentDTO;
 import com.school.entity.Student;
  //A Mapper automatically converts data between Entity, BO, and DTO layers, and with MapStruct, the mapping code is auto-generated at compile time based on method signatures.
 // MapStruct auto-generates conversions, saving time and preventing errors.

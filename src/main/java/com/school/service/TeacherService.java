@@ -1,7 +1,8 @@
 package com.school.service;
 
-import com.school.dto.TeacherDTO;
 import java.util.List;
+
+import com.school.dto.TeacherDTO;
 
 public interface TeacherService {
     TeacherDTO createTeacher(TeacherDTO teacherDTO);
