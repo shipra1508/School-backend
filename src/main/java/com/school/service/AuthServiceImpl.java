@@ -10,11 +10,13 @@ import com.school.bo.UserBO;
 import com.school.dto.LoginDTO;
 import com.school.dto.RegisterDTO;
 import com.school.entity.User;
+import com.school.exception.InvalidCredentialsException;
 import com.school.mapper.UserMapper;
 import com.school.repository.UserRepository;
+
 @Service
-public class AuthServiceImpl implements AuthService{
-    
+public class AuthServiceImpl implements AuthService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -24,58 +26,48 @@ public class AuthServiceImpl implements AuthService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Override
     public RegisterDTO register(RegisterDTO dto) {
-        // Convert DTO to BO
         UserBO userBO = userMapper.toBO(dto);
 
-        // Check if user with username and role exists
         Optional<User> existingUser = userRepository.findByUsernameAndRole(userBO.getUsername(), userBO.getRole());
         if (existingUser.isPresent()) {
             throw new RuntimeException("User with the same username and role already exists");
         }
-        // Encode password
+
         userBO.setPassword(passwordEncoder.encode(userBO.getPassword()));
-
-        // Map to entity
         User user = userMapper.toEntity(userBO);
-
-        // Save and return DTO
         User savedUser = userRepository.save(user);
+
         return userMapper.toDTO(savedUser);
     }
-    
+
     @Override
     public LoginDTO login(LoginDTO dto) {
         if (dto.getUsername() == null || dto.getPassword() == null) {
-            throw new IllegalArgumentException("Username and password are required for login.");
+            throw new InvalidCredentialsException("Username and password are required for login.");
         }
 
         System.out.println("Login attempt → Username: " + dto.getUsername());
+        System.out.println("DTO → Password: " + dto.getPassword());
 
-        // Find user by username only (ignore role in input)
         Optional<User> optionalUser = userRepository.findByUsername(dto.getUsername());
+        System.out.println("User found in DB: " + optionalUser.isPresent());
 
         if (optionalUser.isEmpty()) {
-            throw new RuntimeException("User not found with the given username.");
+            throw new InvalidCredentialsException("Invalid username or password");
         }
 
         User user = optionalUser.get();
+        System.out.println("Encoded password in DB: " + user.getPassword());
 
         boolean passwordMatches = passwordEncoder.matches(dto.getPassword(), user.getPassword());
+        System.out.println("Password match result: " + passwordMatches);
 
         if (!passwordMatches) {
-            throw new RuntimeException("Invalid password");
+            throw new InvalidCredentialsException("Invalid username or password");
         }
 
-        // Login successful - return actual role from DB
         return new LoginDTO(user.getUsername(), null, user.getRole());
     }
-
-
-
-
-
 }
-
-
-
